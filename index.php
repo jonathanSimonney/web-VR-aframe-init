@@ -1,1 +1,1 @@
-<?php header( 'Location: /canvas.html' ) ;  ?>
+<?php header( 'Location: /index.html' ) ;  ?>
