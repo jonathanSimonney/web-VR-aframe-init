@@ -10,7 +10,10 @@
 <a-scene environment="preset: forest;" move-all-children-top="2" set-list-items>
     <!--we first load the assets neede -->
     <a-assets>
+        <!--model made by Ashley Aslett-->
         <a-asset-item id="helicoModel" src="models/mil_mi-24d_hind_attack_helicopter/scene.gltf"></a-asset-item>
+        <!--model made by wholock982-->
+        <a-asset-item id="enterpriseModel" src="models/enterprise_refit__star_trek/scene.gltf"></a-asset-item>
     </a-assets>
 
     <!-- Dim ambient lighting. -->
@@ -19,8 +22,8 @@
     <a-cylinder position="0 4 -5" rotation="30 90 90" color="#CCC" segments-radial="3" infinite-rotate-on-hover show-elem-on-click="precedent"></a-cylinder>
     <a-sphere position="0 1.25 -5" radius="1.25" rotation="0 0 0" color="#EF2D5E" class="arrowDisplayed"></a-sphere>
     <a-cylinder position="0 -1 -5" rotation="-30 90 90" color="#CCC" segments-radial="3" infinite-rotate-on-hover show-elem-on-click="next"></a-cylinder>
-    <!--model made by Ashley Aslett-->
     <a-gltf-model id="helico" gltf-model="#helicoModel" position="0 -10 -5" color="#fff" scale="0.005 0.005 0.005" class="arrowDisplayed"></a-gltf-model>
+    <a-gltf-model gltf-model="#enterpriseModel" position="0 -80 -5" color="#fff" scale="0.5 0.5 0.5" class="arrowDisplayed"></a-gltf-model>
     <a-sky color="#ECECEC"></a-sky>
 
     <a-camera>

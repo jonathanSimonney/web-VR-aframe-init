@@ -105,7 +105,15 @@ AFRAME.registerComponent('show-elem-on-click', {
 
             currentElemIndex = newIndex;
 
-            console.log(newIndex);
+            if (currentElemIndex === arrayPositions.length){
+                currentElemIndex = 0;
+            }
+
+            if (currentElemIndex < 0){
+                currentElemIndex += arrayPositions.length;
+            }
+
+            console.log(currentElemIndex);
         });
     }
 });
