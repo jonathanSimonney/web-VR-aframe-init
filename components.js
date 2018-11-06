@@ -38,21 +38,14 @@ AFRAME.registerComponent('infinite-rotate-on-hover', {
         animationToApply.setAttribute("attribute", "rotation")
         animationToApply.setAttribute("dur", "1000")
         animationToApply.setAttribute("fill", "forwards")
+        //choose arrival attribute based on initial attribute.
         animationToApply.setAttribute("to", initialRotation.x.toString() + " "  + (initialRotation.y + 360).toString() + " " + initialRotation.z.toString())
-        animationToApply.setAttribute("repeat", "indefinite")
+        animationToApply.setAttribute("repeat", "2")
 
         //add animation when element is "hovered"
-        this.el.addEventListener('mouseenter', function (evt) {
+        elementToRotate.addEventListener('mouseenter', function (evt) {
             console.log("hover begun");
-            animationToApply.setAttribute("repeat", "indefinite")
             elementToRotate.appendChild(animationToApply)
-        });
-
-        //and remove it (after animation is done) when it isn't
-        this.el.addEventListener('mouseleave', function (evt) {
-            hasFocus = false;
-            console.log("hover lost");
-            animationToApply.setAttribute("repeat", "1")
         });
     }
 });
