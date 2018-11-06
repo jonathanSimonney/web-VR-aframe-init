@@ -1,18 +1,28 @@
-AFRAME.registerComponent('click-destroy-helico', {
+AFRAME.registerComponent('move-all-children-top', {
+    schema: {
+        type: 'int',
+        default: 30
+    },
     // if clicked?
     init: function () {
-        console.log("init")
+        console.log(this.data)
         //register component animation
-        this.el.addEventListener('click', function (evt) {
-            console.log("click");
-            helicoAnim = document.createElement('a-animation')
+        this.el.childNodes.forEach(elem => {
+            //we check the child has attributes
+            if (elem.getAttribute){
+                //we check elem doesn't have class environment
+                console.log(typeof elem.className);
+                if (!elem.className.includes("environment")){
+                    let initPosition = elem.getAttribute("position");
+                    //we check initPosition is not null
+                    if (initPosition){
+                        initPosition.y += this.data
+                        elem.setAttribute("position", initPosition)
+                    }
+                }
+            }
 
-            helicoAnim.setAttribute("attribute", "position")
-            helicoAnim.setAttribute("dur", "10000")
-            helicoAnim.setAttribute("fill", "forwards")
-            helicoAnim.setAttribute("to", "1 -10000 -3")
-            document.querySelector("#helico").appendChild(helicoAnim)
-        });
+        })
     }
 });
 
