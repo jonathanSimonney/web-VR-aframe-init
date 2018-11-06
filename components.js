@@ -49,3 +49,63 @@ AFRAME.registerComponent('infinite-rotate-on-hover', {
         });
     }
 });
+
+let arrayElems;
+let arrayPositions;
+let currentElemIndex = 1;
+
+AFRAME.registerComponent('set-list-items', {
+    init: function () {
+        arrayElems = [].slice.call(document.querySelectorAll('.arrowDisplayed'));
+
+        arrayPositions = arrayElems.map(elem => {
+            return elem.getAttribute("position")
+        })
+    }
+}
+)
+
+function animateToPosition(element, position){
+    let animationToApply = document.createElement('a-animation')
+
+    animationToApply.setAttribute("attribute", "position")
+    animationToApply.setAttribute("dur", "1000")
+    animationToApply.setAttribute("fill", "forwards")
+    animationToApply.setAttribute("to", position.x.toString() + " "  + position.y.toString() + " " + position.z.toString())
+    element.appendChild(animationToApply)
+}
+
+AFRAME.registerComponent('show-elem-on-click', {
+    schema: {
+        type: 'string',
+        default: 'next'
+    },
+
+    // if clicked?
+    init: function () {
+        const indexModificator = this.data === 'next' ? 1 : -1;
+
+        //add animation when element is "hovered"
+        this.el.addEventListener('click', function (evt) {
+            const newIndex = currentElemIndex + indexModificator;
+
+            arrayElems
+                .forEach(elem => {
+                    //we take the newPositionIndex based on the array of positions
+                    let newPosition = arrayPositions.indexOf(elem.getAttribute("position")) + indexModificator;
+                    if (newPosition === arrayPositions.length){
+                        newPosition = 0;
+                    }
+
+                    if (newPosition < 0){
+                        newPosition += arrayPositions.length;
+                    }
+                    animateToPosition(elem, arrayPositions[newPosition])
+                })
+
+            currentElemIndex = newIndex;
+
+            console.log(newIndex);
+        });
+    }
+});
