@@ -34,6 +34,7 @@ AFRAME.registerComponent('infinite-rotate-on-hover', {
         //add animation when element is "hovered"
         this.el.addEventListener('mouseenter', function (evt) {
             console.log("hover begun");
+            animationToApply.setAttribute("repeat", "indefinite")
             elementToRotate.appendChild(animationToApply)
         });
 
@@ -41,12 +42,7 @@ AFRAME.registerComponent('infinite-rotate-on-hover', {
         this.el.addEventListener('mouseleave', function (evt) {
             hasFocus = false;
             console.log("hover lost");
-            animationToApply.addEventListener('animationend', () => {
-                if (!hasFocus){
-                    console.log("suppress the animation!");
-                    elementToRotate.removeChild(animationToApply);
-                }
-            })
+            animationToApply.setAttribute("repeat", "1")
         });
     }
 });
