@@ -81,28 +81,15 @@ AFRAME.registerComponent('show-elem-on-click', {
         default: 'next'
     },
 
-    // if clicked?
     init: function () {
         const indexModificator = this.data === 'next' ? 1 : -1;
 
-        //add animation when element is "hovered"
+        //add animation when element is "clicked"
         this.el.addEventListener('click', function (evt) {
-            const newIndex = currentElemIndex + indexModificator;
+            // the "current" element is the one which was before when clicking next, and the one after when clicking precedent
+            const newIndex = currentElemIndex - indexModificator;
 
-            arrayElems
-                .forEach(elem => {
-                    //we take the newPositionIndex based on the array of positions
-                    let newPosition = arrayPositions.indexOf(elem.getAttribute("position")) + indexModificator;
-                    if (newPosition === arrayPositions.length){
-                        newPosition = 0;
-                    }
-
-                    if (newPosition < 0){
-                        newPosition += arrayPositions.length;
-                    }
-                    animateToPosition(elem, arrayPositions[newPosition])
-                })
-
+            //we set the  new currentElemIndex, to always have a mean to find it back
             currentElemIndex = newIndex;
 
             if (currentElemIndex === arrayPositions.length){
@@ -114,6 +101,26 @@ AFRAME.registerComponent('show-elem-on-click', {
             }
 
             console.log(currentElemIndex);
+
+            arrayElems
+                .forEach(elem => {
+                    //we take the newPositionIndex based on the array of positions
+                    const elderPositionIndex = arrayPositions.indexOf(elem.getAttribute("position"))
+                    let newPosition = elderPositionIndex + indexModificator; //we move its position of 1 in the sense we want (precedent or next)
+                    if (newPosition === arrayPositions.length){
+                        newPosition = 0;
+                    }
+
+                    if (newPosition < 0){
+                        newPosition += arrayPositions.length;
+                    }
+                    console.log(newPosition, arrayPositions);
+                    animateToPosition(elem, arrayPositions[newPosition])
+                })
+
+            //don't forget to change the legend...
+            const legend = arrayElems[currentElemIndex].getAttribute("legend")
+            document.querySelector('#legend').setAttribute("value", legend)
         });
     }
 });
